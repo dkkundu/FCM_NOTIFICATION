@@ -1,0 +1,17 @@
+[Unit]
+Description=FCM_NOTIFICATION-uWSGI-instance
+After=network.target postgresql-11.service
+
+[Service]
+User=centos
+Group=nginx
+WorkingDirectory=/opt/FCM_NOTIFICATION
+Environment="PATH=/opt/FCM_NOTIFICATION/venv/bin"
+ExecStart=/opt/FCM_NOTIFICATION/venv/bin/uwsgi --ini /opt/FCM_NOTIFICATION/uwsgi/uwsgi.ini
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
