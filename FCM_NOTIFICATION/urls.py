@@ -24,6 +24,7 @@ from Core.views import IndexView, SignupView, LoginView
 urlpatterns = [
     # index url ---------------------------------------------------------------
     path('', IndexView.as_view(), name='index'),
+    path('', include('notification.urls')),
 
     # prometheus url ----------------------------------------------------------
     path('', include('django_prometheus.urls')),
