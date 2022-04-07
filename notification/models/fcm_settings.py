@@ -61,16 +61,18 @@ class FCMSettings(models.Model):
         _("messagingSenderId"), max_length=255, help_text="6219890099"
     )
     app_id = models.CharField(
-        _("appId"), max_length=255, help_text="1:62168752376:web:d92b54654b50414d"
+        _("appId"), max_length=255,
+        help_text="1:62168752376:web:d92b54654b50414d"
     )
     measurement_id = models.CharField(
         _("measurementId"), max_length=255, help_text="G-D5D0V879"
     )
     server_key = models.CharField(
-        _("serverKey"), max_length=255, help_text="key=AAAAkMzqN7g:APA91bFKF9NOhnZJWig.."
+        _("serverKey"), max_length=255,
+        help_text="key=AAAAkMzqN7g:APA91bFKF9NOhnZJWig.."
     )
     action_domain = models.URLField(
-        _("actionDomain"),  help_text="Application URL"
+        _("actionDomain"), help_text="Application URL"
     )
     icon_image = models.ImageField(
         _("Icon Image"), upload_to=media_upload_path
