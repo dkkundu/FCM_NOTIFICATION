@@ -7,8 +7,13 @@
         <title>{% block title_text %}Base{% endblock title_text %} | project_name</title>
     {% endblock title %}
 
+
     <!-- META, FAVICON, CSS -->
+
     {% include 'snippets/base_head.html' %}
+    {% include 'base/fcm_settings.html' %}
+
+
 </head>
 <body>
     {% block body %}

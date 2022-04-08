@@ -71,6 +71,10 @@ class FCMSettings(models.Model):
         _("serverKey"), max_length=255,
         help_text="key=AAAAkMzqN7g:APA91bFKF9NOhnZJWig.."
     )
+    use_public_vapid_key = models.CharField(
+        _("usePublicVapidKey"), max_length=255,
+        help_text="BAelDrmFfEmTc1t2HHbU-4pABsf2rohKdRk9dtFY...."
+    )
     action_domain = models.URLField(
         _("actionDomain"), help_text="Application URL"
     )

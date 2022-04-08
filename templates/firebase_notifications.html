@@ -1,0 +1,79 @@
+<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyA33PItbOMuAHiR-x4y7rY9oLFRIbkNJZg",
+        authDomain: "bksp-90f80.firebaseapp.com",
+        databaseURL: "https://bksp-90f80-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "bksp-90f80",
+        storageBucket: "bksp-90f80.appspot.com",
+        messagingSenderId: "621913192376",
+        appId: "1:621913192376:web:d92bb676b86ecd5b50414d",
+        measurementId: "G-D5D0VDWQWD",
+        usePublicVapidKey: "BAelDrmFfEmT5L9a6r53mirHAzWOPGVo4WUDBPfQiduzjrXmJuLXEc1t2HHbU-4pABsf2rqruuxVohKdRk9dtFY"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const messaging=firebase.messaging();
+
+    function IntitalizeFireBaseMessaging() {
+        messaging
+            .requestPermission()
+            .then(function () {
+                console.log("Notification Permission");
+                return messaging.getToken();
+            })
+            .then(function (token) {
+                console.log("Token : "+token);
+                sendToServer(token);
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            });
+    }
+
+    messaging.onMessage(function (payload) {
+        console.log(payload);
+        const notificationOption={
+            body:payload.notification.body,
+            icon:payload.notification.icon
+        };
+
+        if(Notification.permission==="granted"){
+            var notification=new Notification(payload.notification.title,notificationOption);
+
+            notification.onclick=function (ev) {
+                ev.preventDefault();
+                window.open(payload.notification.click_action,'_blank');
+                notification.close();
+            }
+        }
+
+    });
+    messaging.onTokenRefresh(function () {
+        messaging.getToken()
+            .then(function (newtoken) {
+                console.log("New Token : "+ newtoken);
+                sendToServer(newtoken);
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            })
+    });
+
+    function sendToServer(token){
+         $.ajax({
+                url:'{% url 'save_fcm_token' %}',
+                type:'POST',
+                data:{token:token},
+            })
+            .done(function(response){
+                if(response=="True"){
+                    console.log("Save")
+                }
+                else{
+                    console.log("Error in Token Save")
+                }
+            });
+    }
+    IntitalizeFireBaseMessaging();
+</script>
